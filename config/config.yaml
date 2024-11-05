@@ -17,6 +17,9 @@ controller_manager:
     
     joint_broad:
       type: joint_state_broadcaster/JointStateBroadcaster
+    
+    joint_camera_controller:
+      type: forward_command_controller/ForwardCommandController
       
       
 joint_01_controller:
@@ -62,3 +65,15 @@ joint_04_controller:
     state_interfaces:
       - position
       - velocity
+
+joint_camera_controller:
+  ros__parameters:
+    joints:
+      - arm_camera_joint
+    interface_name: position
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
