@@ -9,7 +9,7 @@ class CameraControlNode(Node):
     def __init__(self):
         super().__init__('camera_controller_node')  # Node name
         self.publisher_ = self.create_publisher(Float64MultiArray, '/joint_camera_controller/commands', 10)
-        self.timer = self.create_timer(1.0, self.timer_callback)  # Timer to publish every 1 second
+        self.timer = self.create_timer(0.5, self.timer_callback)  # Timer to publish every 0.5 second
         self.get_logger().info('Camera Control Node has started.')
 
     def timer_callback(self):
