@@ -12,7 +12,7 @@ class CameraControlNode(Node):
     def timer_callback(self):
         # Create a Float64MultiArray message with target joint positions
         msg = Float64MultiArray()
-        msg.data = [1.0]  # Example: target positions for the joints
+        msg.data = [-0.2]  # Example: target positions for the joints
         self.publisher_.publish(msg)
         self.get_logger().info(f'Publishing joint positions: {msg.data}')
 

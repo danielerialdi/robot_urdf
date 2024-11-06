@@ -4,7 +4,7 @@
   <name>robot_urdf</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="carmine.recchiuto@dibris.unige.it">root</maintainer>
+  <maintainer email="valentina001012@gmail.com">root</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
@@ -14,5 +14,9 @@
 
   <export>
     <build_type>ament_python</build_type>
+    <launch>
+      <launch>launch</launch>
+    </launch>
+    <urdf>urdf</urdf>
   </export>
 </package>
