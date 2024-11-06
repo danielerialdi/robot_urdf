@@ -44,7 +44,7 @@ def generate_launch_description():
                                    '-topic', '/robot_description', '-Y', '3.14'],
                         output='screen')
 
-    camera01_controller = Node(
+    camera_controller_node = Node(
         package="controller_manager",
         executable="spawner.py",
         output="screen",

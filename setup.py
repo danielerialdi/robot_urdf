@@ -30,6 +30,7 @@ setup(
     entry_points={
         'console_scripts': [
         	'camera_controller_node = robot_urdf.camera_controller_node:main',
+        	'robot_controller_node = robot_urdf.robot_controller_node:main',
         ],
     },
 )
