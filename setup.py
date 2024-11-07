@@ -28,7 +28,12 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+<<<<<<< HEAD
             'camera_controller_node = robot_urdf.camera_controller_node:main'
+=======
+        	'camera_controller_node = robot_urdf.camera_controller_node:main',
+        	'robot_controller_node = robot_urdf.robot_controller_node:main',
+>>>>>>> c08063b9da5f75c2425b64a1f5d82e4b9b2a76d7
         ],
     },
 )
