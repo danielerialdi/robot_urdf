@@ -15,7 +15,8 @@ To move the wheels:
 ```
 ros2 run robot_urdf robot_controller_node
 ```
-You can stop whenever you want the 2 nodes pressing 'q'.
+
+You can stop whenever you want the 2 nodes pressing 'q'. If you want to restart the node you have to press 'r'.
 
 
 To launch the vision part you need ros2_aruco package.
