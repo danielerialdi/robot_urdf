@@ -20,23 +20,24 @@ class RobotControlNode(Node):
             msg.angular.z = 0.0  # Angular velocity (rad/s)
             self.publisher_.publish(msg)
             time.sleep(0.5)
-            return  # If the node is stopped, do not publish any messages
-        
-        # Set linear and angular velocities here
-        msg.linear.x = 0.0  # Linear velocity (m/s)
-        msg.angular.z = 1.0  # Angular velocity (rad/s)
-        self.publisher_.publish(msg)
+        else:
+            # Set linear and angular velocities here
+            msg.linear.x = 0.0  # Linear velocity (m/s)
+            msg.angular.z = 1.0  # Angular velocity (rad/s)
+            self.publisher_.publish(msg)
 
 
 # Function to handle user input and stop the node
 def input_thread():
     global stop_node
     while True:
-        user_input = input("Press 'q' to stop the node: ")
+        user_input = input("Press 'q' to stop the node, 'r' to restart it: ")
         if user_input == 'q':
             stop_node = True
             print("Stopping the node...")
-            break
+        elif user_input == 'r' and stop_node:
+            stop_node = False
+            print("Restarting the node...")
 
 
 def main(args=None):
@@ -50,7 +51,7 @@ def main(args=None):
     thread.start()
 
     # Keep the node running until stop_node is True
-    while rclpy.ok() and not stop_node:
+    while rclpy.ok():
         rclpy.spin_once(node)
 
     # Shutdown ROS 2 and clean up

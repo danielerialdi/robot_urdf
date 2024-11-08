@@ -19,25 +19,25 @@ class CameraControlNode(Node):
     def timer_callback(self):
         # If stop_node flag is set to True, do not publish anything
         global pos, stop_node
-        if stop_node:
-            return
-        
-        # Create a Float64MultiArray message with target joint positions
-        msg = Float64MultiArray()
-        msg.data = [pos]  # Example: target positions for the joints
-        self.publisher_.publish(msg)
-        pos = pos + 0.1
+        if not stop_node:        
+            # Create a Float64MultiArray message with target joint positions
+            msg = Float64MultiArray()
+            msg.data = [pos]  # Example: target positions for the joints
+            self.publisher_.publish(msg)
+            pos = pos + 0.1
 
 # Function to handle user input and stop the node
 def input_thread():
     global stop_node
     while True:
-        user_input = input("Press 'q' to stop the node: ")
+        user_input = input("Press 'q' to stop the node, 'r' to restart it: ")
         if user_input == 'q':
             stop_node = True
             print("Stopping the node...")
-            break
-
+        elif user_input == 'r' and stop_node:
+            stop_node = False
+            print("Restarting the node...")
+        
 # Main function to initialize and run the ROS2 node
 def main(args=None):
     global pos
@@ -53,7 +53,7 @@ def main(args=None):
     thread.start()
 
     # Keep the node running until stop_node is True
-    while rclpy.ok() and not stop_node:
+    while rclpy.ok():
         rclpy.spin_once(node)
 
     # Shutdown ROS 2 and clean up
