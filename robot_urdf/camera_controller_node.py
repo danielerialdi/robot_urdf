@@ -26,7 +26,6 @@ class CameraControlNode(Node):
         msg = Float64MultiArray()
         msg.data = [pos]  # Example: target positions for the joints
         self.publisher_.publish(msg)
-        self.get_logger().info(f'Publishing joint positions: {msg.data}')
         pos = pos + 0.1
 
 # Function to handle user input and stop the node
