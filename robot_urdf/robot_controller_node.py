@@ -1,6 +1,10 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+import threading
+import time
+# Global variable to control the stopping condition
+stop_node = False
 
 class RobotControlNode(Node):
     def __init__(self):
@@ -11,19 +15,48 @@ class RobotControlNode(Node):
 
     def timer_callback(self):
         msg = Twist()
+        if stop_node:
+            msg.linear.x = 0.0  # Linear velocity (m/s)
+            msg.angular.z = 0.0  # Angular velocity (rad/s)
+            self.publisher_.publish(msg)
+            time.sleep(0.5)
+            return  # If the node is stopped, do not publish any messages
+        
         # Set linear and angular velocities here
         msg.linear.x = 0.0  # Linear velocity (m/s)
         msg.angular.z = 1.0  # Angular velocity (rad/s)
         self.publisher_.publish(msg)
 
+
+# Function to handle user input and stop the node
+def input_thread():
+    global stop_node
+    while True:
+        user_input = input("Press 'q' to stop the node: ")
+        if user_input == 'q':
+            stop_node = True
+            print("Stopping the node...")
+            break
+
+
 def main(args=None):
+    # Initialize rclpy and create the node
     rclpy.init(args=args)
     node = RobotControlNode()
-    rclpy.spin(node)  # Keep the node running until it is killed
 
-    # Shutdown ROS 2
+    # Start the input listening thread
+    thread = threading.Thread(target=input_thread)
+    thread.daemon = True  # Daemonize the thread to allow it to exit when the program exits
+    thread.start()
+
+    # Keep the node running until stop_node is True
+    while rclpy.ok() and not stop_node:
+        rclpy.spin_once(node)
+
+    # Shutdown ROS 2 and clean up
     node.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
