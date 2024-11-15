@@ -87,7 +87,7 @@ Now, `ros1_bridge` can be started by running:
 ```
 ros2 run ros1_bridge dynamic_bridge
 ```
-If it shows some errors, kill it and rerun it with the following flag:
+If only the services are created but not the topics, kill it and rerun it with the following flag:
 ```
 ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
 ```
