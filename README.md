@@ -79,7 +79,7 @@ Now, to export the correct ip's for the connection, run:
 export ROS_MASTER_URI=http://192.168.178.51:11311
 ```
 ```
-export ROS_IP=http://<pc_ip>
+export ROS_IP=<pc_ip>
 ```
 If you don't know what's your pc's ip, run `ip addr`.
 
