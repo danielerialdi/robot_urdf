@@ -63,7 +63,11 @@ and try again with the previous command, which should work.
 Now that the test has been done, kill the roslaunch and run:
 ```
 export ROS_MASTER_URI=http://192.168.178.98:11311
+```
+``` 
 export ROS_IP=192.168.178.98
+```
+``` 
 roslaunch tutorial_pkg all.launch
 ``` 
 
