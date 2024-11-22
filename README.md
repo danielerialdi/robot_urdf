@@ -73,7 +73,7 @@ roslaunch tutorial_pkg all.launch
 
 Done! Now this node will keep running all the drivers of the robot, so that it can be interfaced.
 
-## Bridge terminal
+### Bridge terminal
 This terminal will be dedicated to the bridge between ROS1 and ROS2. Therefore, since the `ros1_bridge` is a ROS2 package, the source to your ROS2 distro is needed. For this, run:
 ```
 source /opt/ros/foxy/setup.bash
@@ -98,7 +98,7 @@ ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
 
 Done! Now the bridge should connect to each topic of the robot and create them one by one for ROS2. It may take a while for all the topics to be created.
 
-## ROS2 interface terminal
+### ROS2 interface terminal
 To check the newly created ROS2 topics and, later, run your code on the robot, create a new terminal and source your ROS2 distro:
 ```
 source /opt/ros/foxy/setup.bash
