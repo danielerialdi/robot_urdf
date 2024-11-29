@@ -2,7 +2,9 @@ To make the simulation start use the command
 ```
 ros2 launch robot_urdf gazebo_aruco.launch.py
 ```
-To make the robot move we have two possibility:
+To make the robot move we have two possibility.
+
+
 To move the robotic arm:
 ```
 ros2 run robot_urdf camera_controller_node
