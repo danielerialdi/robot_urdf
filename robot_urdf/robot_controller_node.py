@@ -19,7 +19,6 @@ class RobotControlNode(Node):
             msg.linear.x = 0.0  # Linear velocity (m/s)
             msg.angular.z = 0.0  # Angular velocity (rad/s)
             self.publisher_.publish(msg)
-            time.sleep(0.5)
         else:
             # Set linear and angular velocities here
             msg.linear.x = 0.0  # Linear velocity (m/s)

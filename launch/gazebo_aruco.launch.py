@@ -55,7 +55,6 @@ def generate_launch_description():
                               description='Absolute path to robot urdf file'),
         robot_state_publisher_node,
         joint_state_publisher_node,
-        spawn_entity,
         ExecuteProcess(
             cmd=['gazebo', '--verbose', default_world_path,
                  '-s', 'libgazebo_ros_factory.so'],
@@ -63,4 +62,6 @@ def generate_launch_description():
         ExecuteProcess(
             cmd=['rviz2', '-d', rviz_config_path],
             output='screen'),
+        spawn_entity,
+        camera01_controller
     ])
