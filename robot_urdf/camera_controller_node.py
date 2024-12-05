@@ -8,7 +8,6 @@ pos = 0.1
 # Global variable to control the stopping condition
 stop_node = False
 
-# CameraControlNode class definition
 class CameraControlNode(Node):
     def __init__(self):
         super().__init__('camera_controller_node')  # Node name
@@ -22,7 +21,7 @@ class CameraControlNode(Node):
         if not stop_node:        
             # Create a Float64MultiArray message with target joint positions
             msg = Float64MultiArray()
-            msg.data = [pos]  # Example: target positions for the joints
+            msg.data = [pos] 
             self.publisher_.publish(msg)
             pos = pos + 0.1
 
@@ -38,7 +37,7 @@ def input_thread():
             stop_node = False
             print("Restarting the node...")
         
-# Main function to initialize and run the ROS2 node
+
 def main(args=None):
     global pos
     pos = 0.1  # Initialize position variable
@@ -48,6 +47,8 @@ def main(args=None):
     node = CameraControlNode()
 
     # Start the input listening thread
+    # This is done because if we want to stop the real robot from moving
+    # this is the most efficient way to do it without ctrl+c that would stop the whole program
     thread = threading.Thread(target=input_thread)
     thread.daemon = True  # Daemonize the thread to allow it to exit when the program exits
     thread.start()

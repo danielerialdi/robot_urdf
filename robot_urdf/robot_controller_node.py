@@ -3,14 +3,15 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import threading
 import time
+
 # Global variable to control the stopping condition
 stop_node = False
 
 class RobotControlNode(Node):
     def __init__(self):
-        super().__init__('robot_controller_node')  # Node name
+        super().__init__('robot_controller_node')
         self.publisher_ = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.timer = self.create_timer(0.5, self.timer_callback)  # Timer to publish every 0.5 second
+        self.timer = self.create_timer(0.5, self.timer_callback)
         self.get_logger().info('Robot Control Node has started.')
 
     def timer_callback(self):
@@ -40,11 +41,12 @@ def input_thread():
 
 
 def main(args=None):
-    # Initialize rclpy and create the node
     rclpy.init(args=args)
     node = RobotControlNode()
 
     # Start the input listening thread
+    # This is done because if we want to stop the real robot from moving
+    # this is the most efficient way to do it without ctrl+c that would stop the whole program
     thread = threading.Thread(target=input_thread)
     thread.daemon = True  # Daemonize the thread to allow it to exit when the program exits
     thread.start()
