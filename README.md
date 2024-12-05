@@ -1,24 +1,35 @@
-To make the simulation start use the command
+# Simulation
+It is suggested to work with four terminals open.
+
+First of all, the simulation must be started with the following command, in a terminal:
 ```
 ros2 launch robot_urdf gazebo_aruco.launch.py
 ```
-To make the robot move we have two possibility.
+Then, there are two types of nodes that need to be launched:
+- control nodes
+- vision nodes
 
+## Control nodes
+There are two possibilities to make the robot move:
+ 1. Make the robot rotate
+ 2. Make the camera rotate
 
-To move the robotic arm:
+In the first case, the following command must be launched in a terminal:
 ```
 ros2 run robot_urdf camera_controller_node
 ```
-To move the wheels:
+In the second case:
 ```
 ros2 run robot_urdf robot_controller_node
 ```
 
-You can stop whenever you want the 2 nodes pressing 'q'. If you want to restart the node you have to press 'r'.
+In both cases, the robot can be stopped anytime by pressing `q`. The node will not be killed but just paused, so that it can be restarted by pressing `r`.
+## Vision nodes
+For the vision part, two nodes need to be launched:
+- `aruco_node`, part of the `ros2_aruco` package
+- `vision_node`, the node we developed
 
-
-To launch the vision part you need ros2_aruco package.
-Run the following commands:
+Therefore, the following commands must be run in two different terminals:
 ```
 ros2 run ros2_aruco aruco_node --ros-args --remap /image:=/robot/camera1/image_raw
 ```
