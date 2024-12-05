@@ -1,4 +1,55 @@
-# Simulation
+# robot_urdf
+
+This repository contains the Control Package for the first assignment of the Experimental Robotics Laboratory course at the Robotics Engineering Master by UniGE.
+The authors are:
+- Valentina Condorelli, 4945679;
+- Annika Delucchi, 4975984;
+- Ramona Ferrari, 4944096;
+- Daniele Rialdi, 4964038.
+
+The package was initially forked by the Professor's repository, to which we added the following files:
+- `aruco_5.world`, to spawn the requested 5 Aruco markers in a circle
+- `camera_controller_node.py`, to rotate the camera, which was raised and placed on a new vertical link
+- `robot_controller_node.py`, to rotate the robot
+
+## Assignment
+The assignment required to:
+- spawn the robot in Gazebo, surrounded by 5 Aruco markers arranged in a circle;
+- implement a routine that starts finding the marker with the lowest ID, and then finds all markers in order;
+- each time a marker is found, a new image is published on a custom topic with a circle around the marker found;
+- implement the same behaviour with two different nodes: in the first one, the whole robot moves; in the second one, you find the markers by only moving the camera.
+
+To develop it, other than adding the new files mentioned above, we modified some of the already provided files
+
+Additionally, this behaviour could be tested also on real robots.
+
+### aruco_5.world
+In order to generate the required world with 5 aruco markers around the robot, we created a new world in Gazebo, added 5 aruco markers (from id 20 to id 24, in random order) in a circle and saved the file in the `worlds` folder of our repo.
+
+### camera_controller_node.py
+This node controls the position of the camera link, by making it rotate by a fixed position offset (0.1) every 0.5 seconds. Moreover, we added multithreading in order to be able to stop the node by pressing `q` without actually killing the node. Indeed, it can be restarted by pressing `r`.
+
+### robot_controller_node.py
+This node controls the velocity of the robot wheels, by sending a constant angular twist of `1.0` around the z-axis. Consequently, the robot body rotates at a constant velocity.
+Similarly to the camera node, we added multithreading in order to be able to stop the node by pressing `q` without actually killing the node. Indeed, it can be restarted by pressing `r`.
+
+### gazebo_aruco.launch.py
+We modified the launch file of the project in order to launch also the controller manager, needed later to correctly launch the `camera_controller_node.py`. For this, we added:
+- `spawn_entity`
+- `camera01_controller`
+
+### robot4.xacro
+We added a new link, called `arm_camera_link`, and its associated `arm_camera_joint` in order to add an arm where the camera could be position, so that it would be elevated from the robot body. For this, we changed the kinematic chain of the robot accordingly.
+
+### config.yaml
+We added the `joint_camera_controller` to the list of robot joints.
+
+### setup.py
+First of all, we needed to create a new package in Python, as the one provided had been created as a C++ package. As a consequence, it was not possible to efficiently add new nodes to the package and make them run in all computers (it worked only locally).
+
+Then, we modified this file so that all the necessary files to correctly launch the project and make it work. Particularly, we imported the operating system, so that all the necessary paths to link the project folders could be defined relatively.
+
+# Simulation: how to run
 It is suggested to work with four terminals open.
 
 First of all, the simulation must be started with the following command, in a terminal:
@@ -25,6 +76,8 @@ ros2 run robot_urdf robot_controller_node
 
 In both cases, the robot can be stopped anytime by pressing `q`. The node will not be killed but just paused, so that it can be restarted by pressing `r`.
 ## Vision nodes
+The vision nodes can be found in our [vision repo](https://github.com/annikadl/ros2_aruco.git).
+
 For the vision part, two nodes need to be launched:
 - `aruco_node`, part of the `ros2_aruco` package
 - `vision_node`, the node we developed
@@ -38,7 +91,9 @@ and
 ros2 run ros2_aruco vision_node
 ```
 
-# To connect with the robot
+# Real robot: how to connect
+For a full guide and troubleshooting, check the [Professor's repo](https://github.com/RICE-unige/rosbot_tutorials.git).
+
 First of all, the .bashrc should not source any ros/ros2 version. Each necessary version should be independently sourced in every terminal.
 
 ## Install ros1_bridge
